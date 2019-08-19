@@ -48,11 +48,13 @@ class: bg-main1
 ---
 class: middle bg-main1
 
+&lt;center&gt;
 # Introdução
 
 ---
 class: middle bg-main1
 
+&lt;center&gt;
 # Virtualização
 
 ---
@@ -71,7 +73,6 @@ class: bg-main1
 
 &lt;center&gt;
 ![](res/1_intro/hypervisor_overview.svg)
-&lt;center&gt;
 
 ---
 class: bg-main1
@@ -80,11 +81,11 @@ class: bg-main1
 
 &lt;center&gt;
 ![](res/1_intro/container_overview.svg)
-&lt;center&gt;
 
 ---
 class: middle bg-main1
 
+&lt;center&gt;
 # Docker 🐳
 
 ---
@@ -95,6 +96,119 @@ class: bg-main1
 &lt;br&gt;
 
 ### Docker é uma plataforma para o gerenciamento de containers (@Schommer2014), que ajuda desenvolvedores e administradores de sistemas a desenvolver, distribuir, implantar e executar aplicações em ambientes isolados, sem problemas com dependências do ambiente ou configurações através de Linux Containers (LXC) (@Schommer2014).
+
+---
+class: bg-main1
+
+# Docker 🐳 Estrutura
+
+&lt;br&gt;
+
+&lt;center&gt;
+![](res/2_docker/docker_api_infra.jpg)
+
+
+---
+class: bg-main1
+
+# Docker 🐳 Estrutura
+
+&lt;br&gt;
+
+&lt;center&gt;
+![](res/2_docker/docker_connect_api.svg)
+
+---
+class: bg-main1
+
+# Docker 🐳 Instalação (Ubuntu)
+
+&lt;br&gt;
+
+--
+Baixando e instalando
+
+
+```shell
+$ curl -fsSL https://get.docker.com -o get-docker.sh
+$ sudo sh get-docker.sh
+```
+
+--
+Permitindo a utilização por usuários não-root
+
+
+```shell
+$ sudo usermod -aG docker seu-usuario
+```
+
+--
+Verificando a instalação realizada
+
+
+```shell
+$ docker -v
+```
+
+.yellow[\# Docker version 18.09.7, build 2d0083d]
+
+---
+class: bg-main1
+
+# Docker 🐳 Containers
+
+&lt;br&gt;
+
+### Containers são .yellow[instâncias] de Imagens Docker que estão sendo executadas em ambientes isolados, sendo que, nestes ambientes há todos os recursos necessários para a execução dos processos os quais foram definidos para os containers.
+
+---
+class: bg-main1
+
+# Docker 🐳 Imagens
+
+&lt;br&gt;
+
+###  As imagens Docker representam arquivos executáveis que possuem todo o descritivo de arquivos e processos que devem ser feitos no momento em que são executadas para a geração de um container. Imagens são geradas através de .yellow[Dockerfiles].
+
+---
+class: bg-main1
+
+# Docker 🐳 Criando imagens
+
+&lt;br&gt;
+
+--
+Gerando o script Python que será executado dentro do container
+
+```shell
+echo "print('Oi! Esta é minha primeira imagem Docker! E ela funciona!')" &gt; ola.py
+```
+
+--
+Criando o arquivo .yellow[Dockerfile]
+
+```dockerfile
+FROM python:3
+COPY ola.py ./
+
+CMD [ "./ola.py" ]
+ENTRYPOINT [ "python" ]
+```
+
+--
+Criando a imagem
+
+```shell
+$ docker build -t "minha_primeira_imagem:1.0" . 
+```
+
+--
+Gerando um container
+
+
+```shell
+$ docker run minha_primeira_imagem:1.0
+```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
