@@ -204,3 +204,268 @@ Gerando um container
 $ docker run minha_primeira_imagem:1.0
 ```
 
+---
+class: bg-main1
+
+# Docker `r emo::ji("whale")` Camadas de uma imagem
+
+<br>
+
+### O Docker trabalha utilizando um conceito de .yellow[camadas], onde cada modificação realizada por comandos do Dockerfile cria uma camada que não pode ser alterada, sendo possível alterar somente a última camada gerada.
+
+<br><br>
+
+```{Dockerfile}
+FROM ubuntu
+
+RUN apt update -y
+RUN apt install vim -y
+
+ENTRYPOINT [ "bash" ]
+```
+
+---
+class: bg-main1
+
+# Docker `r emo::ji("whale")` Camadas de uma imagem
+
+<center>
+![](res/2_docker/camadas_1.svg)
+
+---
+class: bg-main1
+
+# Docker `r emo::ji("whale")` Camadas de uma imagem
+
+<center>
+![](res/2_docker/camadas_2.svg)
+
+---
+class: bg-main1
+
+# Docker `r emo::ji("whale")` Camadas de uma imagem
+
+<br>
+
+```{Dockerfile}
+FROM ubuntu
+
+RUN apt update -y && apt install vim -y && apt clean
+
+ENTRYPOINT [ "bash" ]
+```
+
+--
+As camadas tendem a diminuir
+
+<center>
+![](res/2_docker/camadas_3.svg)
+
+---
+class: bg-main1
+
+# Docker `r emo::ji("whale")` Aquisição de imagens
+
+<br><br>
+
+--
+Liste as imagens que estão em sua máquina
+
+```{shell}
+docker images
+```
+
+--
+Vamos pedir a execução de uma imagem do CentOS 7 ao Docker
+```{shell}
+docker run centos:7
+```
+
+---
+class: bg-main1
+
+# Docker `r emo::ji("whale")` Aquisição de imagens
+
+<br>
+
+<center>
+![](res/2_docker/docker_registry.svg)
+
+
+---
+class: bg-main1
+
+# Docker `r emo::ji("whale")` Arquitetura geral
+
+<br>
+![](res/2_docker/docker_arch.png)
+
+---
+class: middle bg-main1
+
+<center>
+# Administrando containers
+
+
+---
+class: middle bg-main1
+
+<center>
+# Administrando containers - Criando containers
+
+---
+class: middle bg-main1
+
+<center>
+# Administrando containers - Execuções
+
+
+---
+class: bg-main1
+
+# Administrando containers - Execuções (Comandos)
+
+<br>
+
+<center>
+![](res/2_docker/execucoes_1.png)
+
+---
+class: bg-main1
+
+# Administrando containers - Execuções (Estados)
+
+<br>
+
+<center>
+![](res/2_docker/execucoes_2.png)
+
+---
+class: bg-main1
+
+# Administrando containers - Visualização de status
+
+<br>
+
+<center>
+![](res/2_docker/status_1.png)
+
+---
+class: bg-main1
+
+# Administrando containers - Gerenciamento de memória e CPU
+
+<br><br>
+
+### Quando não é atribuido limites de recursos a um *container*, se necessário, ele pode consumir todos os recursos da máquina onde está sendo executado.
+
+--
+Criando um novo container
+
+```{shell}
+$ docker run -ti --name debian_de_teste debian
+```
+
+--
+Inspecionando a quantidade de memória que pode ser consumida
+```{shell}
+$ docker inspect debian_de_teste | grep -i memory
+```
+
+.yellow[\#
+"Memory": 0,
+"KernelMemory": 0,
+"MemoryReservation": 0,
+"MemorySwap": 0,
+"MemorySwappiness": null
+]
+
+---
+class: bg-main1
+
+# Administrando containers - Gerenciamento de memória e CPU
+
+<br><br>
+
+--
+Excluíndo container sem limite de memória
+```{shell}
+# -f Para excluir mesmo se o container estiver com estado UP
+$ docker rm -f debian_de_teste
+```
+
+--
+Criando container com limite de 512 MB
+```{shell}
+$ docker run -ti --name debian_de_teste --memory 512m debian
+```
+
+--
+Inspecionando novamente a quantidade de memória que pode ser consumida
+```{shell}
+$ docker inspect debian_de_teste | grep -i memory
+```
+
+.yellow[\#
+"Memory": 536870912,
+"KernelMemory": 0,
+"MemoryReservation": 0,
+"MemorySwap": -1,
+"MemorySwappiness": null
+]
+
+---
+class: bg-main1
+
+# Administrando containers - Gerenciamento de memória e CPU
+
+<br>
+
+### A mudança de quantidade de memória pode ser feita em .yellow[containers] já criados
+
+--
+Atualizando a quantidade de memória
+```{shell}
+$ docker update --memory 256m debian_de_teste
+```
+
+--
+Verificando novamente a quantidade que pode ser utilizada
+```{shell}
+$ docker inspect debian_de_teste | grep -i memory
+```
+
+.yellow[\#
+"Memory": 268435456,
+"KernelMemory": 0,
+"MemoryReservation": 0,
+"MemorySwap": -1,
+"MemorySwappiness": null
+]
+
+---
+class: bg-main1
+
+# Administrando containers - Gerenciamento de memória e CPU
+
+<br><br>
+
+```{shell}
+$ docker run -ti --name debian_1 --cpu-shares 1024 debian
+$ docker run -ti --name debian_2 --cpu-shares 512 debian
+$ docker run -ti --name debian_3 --cpu-shares 512 debian
+```
+
+--
+O comando .yellow[update] também é aplicável aqui
+```{shell}
+$ docker update --cpu-shares 758 debian_2
+```
+
+---
+class: bg-main1
+
+# Administrando containers - Armazenamento
+
+
+

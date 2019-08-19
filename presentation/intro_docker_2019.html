@@ -180,12 +180,14 @@ class: bg-main1
 --
 Gerando o script Python que será executado dentro do container
 
+
 ```shell
 echo "print('Oi! Esta é minha primeira imagem Docker! E ela funciona!')" &gt; ola.py
 ```
 
 --
 Criando o arquivo .yellow[Dockerfile]
+
 
 ```dockerfile
 FROM python:3
@@ -198,6 +200,7 @@ ENTRYPOINT [ "python" ]
 --
 Criando a imagem
 
+
 ```shell
 $ docker build -t "minha_primeira_imagem:1.0" . 
 ```
@@ -208,6 +211,277 @@ Gerando um container
 
 ```shell
 $ docker run minha_primeira_imagem:1.0
+```
+
+---
+class: bg-main1
+
+# Docker 🐳 Camadas de uma imagem
+
+&lt;br&gt;
+
+### O Docker trabalha utilizando um conceito de .yellow[camadas], onde cada modificação realizada por comandos do Dockerfile cria uma camada que não pode ser alterada, sendo possível alterar somente a última camada gerada.
+
+&lt;br&gt;&lt;br&gt;
+
+
+```dockerfile
+FROM ubuntu
+
+RUN apt update -y
+RUN apt install vim -y
+
+ENTRYPOINT [ "bash" ]
+```
+
+---
+class: bg-main1
+
+# Docker 🐳 Camadas de uma imagem
+
+&lt;center&gt;
+![](res/2_docker/camadas_1.svg)
+
+---
+class: bg-main1
+
+# Docker 🐳 Camadas de uma imagem
+
+&lt;center&gt;
+![](res/2_docker/camadas_2.svg)
+
+---
+class: bg-main1
+
+# Docker 🐳 Camadas de uma imagem
+
+&lt;br&gt;
+
+
+```dockerfile
+FROM ubuntu
+
+RUN apt update -y &amp;&amp; apt install vim -y &amp;&amp; apt clean
+
+ENTRYPOINT [ "bash" ]
+```
+
+--
+As camadas tendem a diminuir
+
+&lt;center&gt;
+![](res/2_docker/camadas_3.svg)
+
+---
+class: bg-main1
+
+# Docker 🐳 Aquisição de imagens
+
+&lt;br&gt;&lt;br&gt;
+
+--
+Liste as imagens que estão em sua máquina
+
+
+```shell
+docker images
+```
+
+--
+Vamos pedir a execução de uma imagem do CentOS 7 ao Docker
+
+```shell
+docker run centos:7
+```
+
+---
+class: bg-main1
+
+# Docker 🐳 Aquisição de imagens
+
+&lt;br&gt;
+
+&lt;center&gt;
+![](res/2_docker/docker_registry.svg)
+
+
+---
+class: bg-main1
+
+# Docker 🐳 Arquitetura geral
+
+&lt;br&gt;
+![](res/2_docker/docker_arch.png)
+
+---
+class: middle bg-main1
+
+&lt;center&gt;
+# Administrando containers
+
+
+---
+class: middle bg-main1
+
+&lt;center&gt;
+# Administrando containers - Criando containers
+
+---
+class: middle bg-main1
+
+&lt;center&gt;
+# Administrando containers - Execuções
+
+
+---
+class: bg-main1
+
+# Administrando containers - Execuções (Comandos)
+
+&lt;br&gt;
+
+&lt;center&gt;
+![](res/2_docker/execucoes_1.png)
+
+---
+class: bg-main1
+
+# Administrando containers - Execuções (Estados)
+
+&lt;br&gt;
+
+&lt;center&gt;
+![](res/2_docker/execucoes_2.png)
+
+---
+class: bg-main1
+
+# Administrando containers - Visualização de status
+
+&lt;br&gt;
+
+&lt;center&gt;
+![](res/2_docker/status_1.png)
+
+---
+class: bg-main1
+
+# Administrando containers - Gerenciamento de memória e CPU
+
+&lt;br&gt;&lt;br&gt;
+
+### Quando não é atribuido limites de recursos a um *container*, se necessário, ele pode consumir todos os recursos da máquina onde está sendo executado.
+
+--
+Criando um novo container
+
+
+```shell
+$ docker run -ti --name debian_de_teste debian
+```
+
+--
+Inspecionando a quantidade de memória que pode ser consumida
+
+```shell
+$ docker inspect debian_de_teste | grep -i memory
+```
+
+.yellow[\#
+"Memory": 0,
+"KernelMemory": 0,
+"MemoryReservation": 0,
+"MemorySwap": 0,
+"MemorySwappiness": null
+]
+
+---
+class: bg-main1
+
+# Administrando containers - Gerenciamento de memória e CPU
+
+&lt;br&gt;&lt;br&gt;
+
+--
+Excluíndo container sem limite de memória
+
+```shell
+# -f Para excluir mesmo se o container estiver com estado UP
+$ docker rm -f debian_de_teste
+```
+
+--
+Criando container com limite de 512 MB
+
+```shell
+$ docker run -ti --name debian_de_teste --memory 512m debian
+```
+
+--
+Inspecionando novamente a quantidade de memória que pode ser consumida
+
+```shell
+$ docker inspect debian_de_teste | grep -i memory
+```
+
+.yellow[\#
+"Memory": 536870912,
+"KernelMemory": 0,
+"MemoryReservation": 0,
+"MemorySwap": -1,
+"MemorySwappiness": null
+]
+
+---
+class: bg-main1
+
+# Administrando containers - Gerenciamento de memória e CPU
+
+&lt;br&gt;
+
+### A mudança de quantidade de memória pode ser feita em .yellow[containers] já criados
+
+--
+Atualizando a quantidade de memória
+
+```shell
+$ docker update --memory 256m debian_de_teste
+```
+
+--
+Verificando novamente a quantidade que pode ser utilizada
+
+```shell
+$ docker inspect debian_de_teste | grep -i memory
+```
+
+.yellow[\#
+"Memory": 268435456,
+"KernelMemory": 0,
+"MemoryReservation": 0,
+"MemorySwap": -1,
+"MemorySwappiness": null
+]
+
+---
+class: bg-main1
+
+# Administrando containers - Gerenciamento de memória e CPU
+
+&lt;br&gt;&lt;br&gt;
+
+
+```shell
+$ docker run -ti --name debian_1 --cpu-shares 1024 debian
+$ docker run -ti --name debian_2 --cpu-shares 512 debian
+$ docker run -ti --name debian_3 --cpu-shares 512 debian
+```
+
+--
+O comando .yellow[update] também é aplicável aqui
+
+```shell
+$ docker update --cpu-shares 758 debian_2
 ```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
