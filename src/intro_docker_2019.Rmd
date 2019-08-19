@@ -1,0 +1,95 @@
+---
+title: "Introdução ao Docker"
+author: "<br><br>Felipe Menino Carlos"
+date: "<br><br>21-08-2019"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["assets/shinobi.css", "assets/ninpo.css", "assets/ninjutsu.css"]
+    seal: true
+    self_contained: false
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+exclude: true
+<style type="text/css">
+code.r{
+  font-size: 16px;
+}
+pre {
+  font-size: 16px !important;
+}
+</style>
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+---
+class: bg-main1
+
+# Agenda
+
+--
+### Introdução `r emo::ji("heavy_check_mark")`
+
+--
+### Virtualização `r emo::ji("heavy_check_mark")`
+
+--
+### Docker `r emo::ji("heavy_check_mark")`
+
+--
+### Exemplos de uso `r emo::ji("heavy_check_mark")`
+
+---
+class: middle bg-main1
+
+# Introdução
+
+---
+class: middle bg-main1
+
+# Virtualização
+
+---
+class: bg-main1
+
+# Virtualização
+
+<br>
+
+### Virtualização é o processo de criar .yellow[ambientes virtuais isolados]. Existem duas formas de prover tais ambientes (@Chung2016), sendo elas, as baseadas em .yellow[containers] ou hypervisors (@Morabito2015).
+
+---
+class: bg-main1
+
+# Virtualização - Hypervisor
+
+<center>
+![](res/1_intro/hypervisor_overview.svg)
+<center>
+
+---
+class: bg-main1
+
+# Virtualização - Containers
+
+<center>
+![](res/1_intro/container_overview.svg)
+<center>
+
+---
+class: middle bg-main1
+
+# Docker `r emo::ji("whale")`
+
+---
+class: bg-main1
+
+# Docker `r emo::ji("whale")`
+
+<br>
+
+### Docker é uma plataforma para o gerenciamento de containers (@Schommer2014), que ajuda desenvolvedores e administradores de sistemas a desenvolver, distribuir, implantar e executar aplicações em ambientes isolados, sem problemas com dependências do ambiente ou configurações através de Linux Containers (LXC) (@Schommer2014).
