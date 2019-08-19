@@ -1,0 +1,23 @@
+.divWithWhiteBackground {
+  background-color: white !important;
+}
+
+.imageContainer {
+  width: 500px;
+  height: 480px;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: auto;
+}
+
+.imageContainerWithBigImage {
+  width: 780px;
+  height: 580px;
+}
+
+.imageContainerWithBigImage img {
+  width: 100%;
+  height: auto;
+}

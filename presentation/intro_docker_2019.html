@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/shinobi.css" type="text/css" />
     <link rel="stylesheet" href="assets/ninpo.css" type="text/css" />
     <link rel="stylesheet" href="assets/ninjutsu.css" type="text/css" />
+    <link rel="stylesheet" href="assets/default.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -26,6 +27,7 @@ code.r{
 pre {
   font-size: 16px !important;
 }
+
 &lt;/style&gt;
 
 ---
@@ -71,16 +73,23 @@ class: bg-main1
 
 # Virtualização - Hypervisor
 
+&lt;br&gt;
+
 &lt;center&gt;
-![](res/1_intro/hypervisor_overview.svg)
+&lt;div class="imageContainer divWithWhiteBackground"&gt;
+  ![](res/1_intro/hypervisor_overview.svg)
+&lt;div&gt;
 
 ---
 class: bg-main1
 
 # Virtualização - Containers
 
+&lt;br&gt;
+
 &lt;center&gt;
-![](res/1_intro/container_overview.svg)
+&lt;div class="imageContainer divWithWhiteBackground"&gt;
+  ![](res/1_intro/container_overview.svg)
 
 ---
 class: middle bg-main1
@@ -105,6 +114,7 @@ class: bg-main1
 &lt;br&gt;
 
 &lt;center&gt;
+&lt;div class="imageContainer"&gt;
 ![](res/2_docker/docker_api_infra.jpg)
 
 
@@ -116,6 +126,7 @@ class: bg-main1
 &lt;br&gt;
 
 &lt;center&gt;
+&lt;div class="divWithWhiteBackground"&gt;
 ![](res/2_docker/docker_connect_api.svg)
 
 ---
@@ -239,7 +250,10 @@ class: bg-main1
 
 # Docker 🐳 Camadas de uma imagem
 
+&lt;br&gt;
+
 &lt;center&gt;
+&lt;div class="divWithWhiteBackground"&gt;
 ![](res/2_docker/camadas_1.svg)
 
 ---
@@ -247,7 +261,10 @@ class: bg-main1
 
 # Docker 🐳 Camadas de uma imagem
 
+&lt;br&gt;
+
 &lt;center&gt;
+&lt;div class="divWithWhiteBackground"&gt;
 ![](res/2_docker/camadas_2.svg)
 
 ---
@@ -270,6 +287,7 @@ ENTRYPOINT [ "bash" ]
 As camadas tendem a diminuir
 
 &lt;center&gt;
+&lt;div class="divWithWhiteBackground"&gt;
 ![](res/2_docker/camadas_3.svg)
 
 ---
@@ -302,8 +320,8 @@ class: bg-main1
 &lt;br&gt;
 
 &lt;center&gt;
+&lt;div class="divWithWhiteBackground"&gt;
 ![](res/2_docker/docker_registry.svg)
-
 
 ---
 class: bg-main1
@@ -311,6 +329,8 @@ class: bg-main1
 # Docker 🐳 Arquitetura geral
 
 &lt;br&gt;
+&lt;center&gt;
+&lt;div class="imageContainerWithBigImage"&gt;
 ![](res/2_docker/docker_arch.png)
 
 ---
@@ -482,6 +502,91 @@ O comando .yellow[update] também é aplicável aqui
 
 ```shell
 $ docker update --cpu-shares 758 debian_2
+```
+
+---
+class: bg-main1
+
+# Administrando containers - Armazenamento
+
+&lt;br&gt;
+
+### Docker disponibiliza três formas diferentes de armazenamento dos dados que estão dentro de um .yellow[container].  
+
+&lt;br&gt;
+
+&lt;center&gt;
+![](res/2_docker/tipos_de_armazenamento.png)
+
+---
+class: bg-main1
+
+# Administrando containers - Armazenamento
+
+&lt;br&gt;
+
+&lt;center&gt;
+&lt;div class="divWithWhiteBackground"&gt;
+  ![](res/2_docker/fluxo_mapeamento_1.png)
+
+---
+class: bg-main1
+
+# Administrando containers - Armazenamento
+
+### O foco aqui será nos .yellow[Volumes] e .yellow[Bind Mounts]
+
+--
+Criando container com .yellow[Volume]
+
+
+```shell
+$ docker run -ti -v /volume --name ubuntu_com_volume ubuntu
+```
+
+--
+Criando arquivo dentro do .yellow[volume] no container
+
+
+```shell
+$ cd /volume &amp;&amp; &gt; arquivo_qualquer.txt
+```
+
+--
+Verificando onde está o .yellow[volume] criado
+
+
+```shell
+$ docker inspect -f {{.Mounts}} ubuntu_com_volume
+```
+
+---
+class: bg-main1
+
+# Administrando containers - Armazenamento
+
+--
+Excluindo o container gerado anteriormente
+
+
+```shell
+$ docker rm -f ubuntu_com_volume
+```
+
+--
+Criando diretório que guarda os dados do container
+
+
+```shell
+$ mkdir /arquivos_containers
+```
+
+--
+Criando novo container com .yellow[Bind mount]
+
+
+```shell
+$ docker run -ti -v /arquivos_containers:/volume --name ubuntu_com_volume ubuntu
 ```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

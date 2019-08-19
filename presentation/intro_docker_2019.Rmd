@@ -5,7 +5,7 @@ date: "<br><br>21-08-2019"
 output:
   xaringan::moon_reader:
     lib_dir: libs
-    css: ["assets/shinobi.css", "assets/ninpo.css", "assets/ninjutsu.css"]
+    css: ["assets/shinobi.css", "assets/ninpo.css", "assets/ninjutsu.css", "assets/default.css"]
     seal: true
     self_contained: false
     nature:
@@ -22,6 +22,7 @@ code.r{
 pre {
   font-size: 16px !important;
 }
+
 </style>
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -69,16 +70,23 @@ class: bg-main1
 
 # Virtualização - Hypervisor
 
+<br>
+
 <center>
-![](res/1_intro/hypervisor_overview.svg)
+<div class="imageContainer divWithWhiteBackground">
+  ![](res/1_intro/hypervisor_overview.svg)
+<div>
 
 ---
 class: bg-main1
 
 # Virtualização - Containers
 
+<br>
+
 <center>
-![](res/1_intro/container_overview.svg)
+<div class="imageContainer divWithWhiteBackground">
+  ![](res/1_intro/container_overview.svg)
 
 ---
 class: middle bg-main1
@@ -103,6 +111,7 @@ class: bg-main1
 <br>
 
 <center>
+<div class="imageContainer">
 ![](res/2_docker/docker_api_infra.jpg)
 
 
@@ -114,6 +123,7 @@ class: bg-main1
 <br>
 
 <center>
+<div class="divWithWhiteBackground">
 ![](res/2_docker/docker_connect_api.svg)
 
 ---
@@ -229,7 +239,10 @@ class: bg-main1
 
 # Docker `r emo::ji("whale")` Camadas de uma imagem
 
+<br>
+
 <center>
+<div class="divWithWhiteBackground">
 ![](res/2_docker/camadas_1.svg)
 
 ---
@@ -237,7 +250,10 @@ class: bg-main1
 
 # Docker `r emo::ji("whale")` Camadas de uma imagem
 
+<br>
+
 <center>
+<div class="divWithWhiteBackground">
 ![](res/2_docker/camadas_2.svg)
 
 ---
@@ -259,6 +275,7 @@ ENTRYPOINT [ "bash" ]
 As camadas tendem a diminuir
 
 <center>
+<div class="divWithWhiteBackground">
 ![](res/2_docker/camadas_3.svg)
 
 ---
@@ -289,8 +306,8 @@ class: bg-main1
 <br>
 
 <center>
+<div class="divWithWhiteBackground">
 ![](res/2_docker/docker_registry.svg)
-
 
 ---
 class: bg-main1
@@ -298,6 +315,8 @@ class: bg-main1
 # Docker `r emo::ji("whale")` Arquitetura geral
 
 <br>
+<center>
+<div class="imageContainerWithBigImage">
 ![](res/2_docker/docker_arch.png)
 
 ---
@@ -467,5 +486,76 @@ class: bg-main1
 
 # Administrando containers - Armazenamento
 
+<br>
 
+### Docker disponibiliza três formas diferentes de armazenamento dos dados que estão dentro de um .yellow[container].  
 
+<br>
+
+<center>
+![](res/2_docker/tipos_de_armazenamento.png)
+
+---
+class: bg-main1
+
+# Administrando containers - Armazenamento
+
+<br>
+
+<center>
+<div class="divWithWhiteBackground">
+  ![](res/2_docker/fluxo_mapeamento_1.png)
+
+---
+class: bg-main1
+
+# Administrando containers - Armazenamento
+
+### O foco aqui será nos .yellow[Volumes] e .yellow[Bind Mounts]
+
+--
+Criando container com .yellow[Volume]
+
+```{shell}
+$ docker run -ti -v /volume --name ubuntu_com_volume ubuntu
+```
+
+--
+Criando arquivo dentro do .yellow[volume] no container
+
+```{shell}
+$ cd /volume && > arquivo_qualquer.txt
+```
+
+--
+Verificando onde está o .yellow[volume] criado
+
+```{shell}
+$ docker inspect -f {{.Mounts}} ubuntu_com_volume
+```
+
+---
+class: bg-main1
+
+# Administrando containers - Armazenamento
+
+--
+Excluindo o container gerado anteriormente
+
+```{shell}
+$ docker rm -f ubuntu_com_volume
+```
+
+--
+Criando diretório que guarda os dados do container
+
+```{shell}
+$ mkdir /arquivos_containers
+```
+
+--
+Criando novo container com .yellow[Bind mount]
+
+```{shell}
+$ docker run -ti -v /arquivos_containers:/volume --name ubuntu_com_volume ubuntu
+```
