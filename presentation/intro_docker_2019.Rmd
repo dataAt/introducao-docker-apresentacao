@@ -101,7 +101,7 @@ class: bg-main1
 
 <br>
 
-### Docker é uma plataforma para o gerenciamento de containers (@Schommer2014), que ajuda desenvolvedores e administradores de sistemas a desenvolver, distribuir, implantar e executar aplicações em ambientes isolados, sem problemas com dependências do ambiente ou configurações através de Linux Containers (LXC) (@Schommer2014).
+### Docker é uma plataforma para o gerenciamento de containers (@Schommer2014), que ajuda desenvolvedores e administradores de sistemas a desenvolver, distribuir, implantar e executar aplicações em ambientes isolados, sem problemas com dependências do ambiente ou configurações.
 
 ---
 class: bg-main1
