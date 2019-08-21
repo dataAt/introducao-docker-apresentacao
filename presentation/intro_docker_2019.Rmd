@@ -2,6 +2,9 @@
 title: "Introdução ao Docker"
 author: "<br><br>Felipe Menino Carlos"
 date: "<br><br>21-08-2019"
+bibliography: [references.bib]
+biblio-style: authoryear
+biblatexoptions: [refsegment=chapter]
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -63,7 +66,7 @@ class: bg-main1
 
 <br>
 
-### Virtualização é o processo de criar .yellow[ambientes virtuais isolados]. Existem duas formas de prover tais ambientes (@Chung2016), sendo elas, as baseadas em .yellow[containers] ou hypervisors (@Morabito2015).
+### Virtualização é o processo de criar .yellow[ambientes virtuais isolados]. Existem duas formas de prover tais ambientes (Chung et al. 2016), sendo elas, as baseadas em .yellow[containers] ou hypervisors (Morabito, Kjällman, and Komu 2015).
 
 ---
 class: bg-main1
@@ -101,7 +104,7 @@ class: bg-main1
 
 <br>
 
-### Docker é uma plataforma para o gerenciamento de containers (@Schommer2014), que ajuda desenvolvedores e administradores de sistemas a desenvolver, distribuir, implantar e executar aplicações em ambientes isolados, sem problemas com dependências do ambiente ou configurações.
+### Docker é uma plataforma para o gerenciamento de containers (Schommer 2014), que ajuda desenvolvedores e administradores de sistemas a desenvolver, distribuir, implantar e executar aplicações em ambientes isolados, sem problemas com dependências do ambiente ou configurações.
 
 ---
 class: bg-main1
